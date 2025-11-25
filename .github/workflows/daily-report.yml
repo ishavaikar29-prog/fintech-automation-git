@@ -33,7 +33,7 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           TO_EMAIL:   ${{ secrets.TO_EMAIL }}
 
-        run: python parent_report.py
+        run: python report_parent.py
 
       - name: Upload Excel
         if: always()
