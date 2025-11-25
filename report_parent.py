@@ -1,8 +1,10 @@
 import os
-from api_client import APIClient
-from excel_writer import create_excel
-from emailer import send_email_with_attachments
-from error_handler import log_exception, log_info, get_log_path
+# report_parent.py (top-level)
+from utils.api_client import APIClient        # instead of 'from .api_client import ...'
+from utils.error_handler import log_error
+from utils.excel_writer import create_excel
+from utils.emailer import send_email_with_attachments
+
 from utils import now_utc_iso
 
 def main():
