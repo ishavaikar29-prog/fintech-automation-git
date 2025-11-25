@@ -5,7 +5,7 @@ from utils.error_handler import log_error
 from utils.excel_writer import create_excel
 from utils.emailer import send_email_with_attachments
 
-from utils import now_utc_iso
+from utils.utils import now_utc_iso
 
 def main():
     try:
