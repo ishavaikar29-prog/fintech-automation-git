@@ -1,6 +1,6 @@
 import requests
-from .utils import retry
-from .error_handler import log_exception, log_info
+from utils.utils import retry
+from utils.error_handler import log_error
 
 class APIClient:
     def __init__(self, headers=None, timeout=20):
