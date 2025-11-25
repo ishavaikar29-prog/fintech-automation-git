@@ -1,5 +1,5 @@
 import requests
-from utils.retry import retry
+from utils.utils import retry
 from utils.error_handler import log_error
 
 class APIClient:
