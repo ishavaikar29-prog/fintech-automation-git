@@ -1,0 +1,52 @@
+name: Weekly Multi-API Report
+
+on:
+  schedule:
+    - cron: "30 12 * * 6"  # 6:00 PM IST (12:30 UTC) every Saturday
+  workflow_dispatch:
+
+jobs:
+  weekly-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Parent Script
+        env:
+          API_TRANSACTIONS: ${{ secrets.API_TRANSACTIONS }}
+          API_SCORECARD: ${{ secrets.API_SCORECARD }}
+          API_DAILY: ${{ secrets.API_DAILY }}
+
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          TO_EMAIL:   ${{ secrets.TO_EMAIL }}
+
+        run: python parent_report.py
+
+      - name: Upload Excel
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Weekly-Excel-Report
+          path: daily_report.xlsx
+          if-no-files-found: warn
+
+      - name: Upload Error Log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Weekly-Error-Log
+          path: error.log
+          if-no-files-found: ignore
